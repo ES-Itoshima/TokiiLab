@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>Firefox</title>
+ 
+<style type="text/css"> 
+div{
+  position:absolute;
+}
+ .p1{
+    top:50px;
+    left:50px;
+   /* top:dist;
+   left:dist; */
+}
+</style>
+ 
+<script> 
+var dist = 50; //初期位置オフセット用変数
+var can_width = 500;
+var can_height = 500;
+window.onmousedown = getMousedown;
+window.onmousemove = getMousemove;
+ 
+<!-- マウスの座標位置取得＆表示 -->
+function getMousedown(evt)
+{
+  x = evt.pageX - dist;
+  y = evt.pageY - dist;
+
+  document.myform.x.value = x - ((can_width / 2) + dist);
+  document.myform.y.value = -1* y +((can_height / 2) + dist);
+
+  
+  if (-can_width <= x <= can_width){
+    }else if (-can_height <= y <= can_height){
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI*2, false);
+      ctx.closePath();
+      ctx.fill();
+    }
+};
+ 
+// マウスの座標位置取得＆表示
+function getMousemove(evt)
+{
+ document.myform.mx.value = evt.pageX;
+ document.myform.my.value = evt.pageY;
+};
+ 
+// <!---                          --->
+function start()
+{
+  canvas = document.getElementById("canvas_1");
+  ctx = canvas.getContext('2d');
+  
+  ctx.fillStyle = "rgb(0,130,0)";
+  ctx.fillRect(0,0,can_width,can_height);
+  draw_axis();
+};
+
+// <!---                          --->
+function draw_axis(){
+  ctx.strokeStyle ="white";
+  ctx.beginPath();
+  ctx.moveTo(0,can_height / 2);
+  ctx.lineTo(can_width,can_height / 2);
+  ctx.closePath();
+  ctx.stroke();  
+  
+  ctx.strokeStyle ="white";
+  ctx.beginPath();
+  ctx.moveTo(can_width / 2,0);
+  ctx.lineTo(can_width / 2,can_height);
+  ctx.closePath();
+  ctx.stroke();  
+  
+  ctx.font = "30px 'MS Pゴシック'";
+  ctx.fillStyle ="yellow";
+  ctx.fillText("y", can_width / 2,50);  
+}
+</script>
+</head>
+ 
+<body onload='start()'>
+<div class="p1">
+<canvas id="canvas_1" width="500" height="500" style="border:0px solid black;"></canvas>
+<p>
+<form name="myform">
+マウスクリック<br>
+x:<input type="text" value="0" name="x">
+y:<input type="text" value="0" name="y">
+<p>
+マウス移動<br>
+x:<input type="text" value="0" name="mx">
+y:<input type="text" value="0" name="my">
+</form>
+</div>
+</body>
+</html>
+ 
